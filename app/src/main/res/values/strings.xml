@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">My ExoPlayer</string>
+    <string name="play_button">▶ PLAY</string>
+    <string name="drm_button">🔒 DRM</string>
+    <string name="url_hint">Paste M3U8 or MPD URL here</string>
+    <string name="enter_url">Please enter a URL</string>
+    <string name="playing">Playing</string>
+    <string name="error_occurred">Error occurred</string>
+    <string name="info_text">Supports: M3U8 (HLS) | MPD (DASH) | MP4</string>
+</resources>
