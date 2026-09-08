@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.PlaybackException;
@@ -16,7 +17,7 @@ import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource;
 
 public class MainActivity extends AppCompatActivity {
-    
+
     private PlayerView playerView;
     private ExoPlayer player;
     private EditText urlInput;
@@ -27,17 +28,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+
         // Find all UI elements
         playerView = findViewById(R.id.player_view);
         urlInput = findViewById(R.id.url_input);
         playButton = findViewById(R.id.play_button);
         drmButton = findViewById(R.id.drm_button);
-        
+
         // Create ExoPlayer instance
         player = new ExoPlayer.Builder(this).build();
         playerView.setPlayer(player);
-        
+
         // Play button - for normal M3U8/MPD streams
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        
+
         // DRM button - for protected streams (Widevine)
         drmButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        
+
         // Error listener for playback issues
         player.addListener(new Player.Listener() {
             @Override
@@ -74,19 +75,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    
+
     private void playVideo(String url, String licenseUrl) {
         DefaultHttpDataSource.Factory dataSourceFactory = new DefaultHttpDataSource.Factory();
-        
+
         MediaItem mediaItem;
-        
+
         // Check if DRM license URL is provided
         if (licenseUrl != null && !licenseUrl.isEmpty()) {
             // Build DRM MediaItem for protected content
             mediaItem = new MediaItem.Builder()
                 .setUri(url)
                 .setDrmConfiguration(
-                    new MediaItem.DrmConfiguration.Builder(MediaItem.DrmConfiguration.WIDEVINE_UUID)
+                    new MediaItem.DrmConfiguration.Builder(C.WIDEVINE_UUID)
                         .setLicenseUri(licenseUrl)
                         .build()
                 )
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             // Build regular MediaItem
             mediaItem = MediaItem.fromUri(url);
         }
-        
+
         // Auto-detect stream type by file extension
         if (url.endsWith(".mpd")) {
             // DASH stream
@@ -111,13 +112,13 @@ public class MainActivity extends AppCompatActivity {
             // MP4 or other direct video
             player.setMediaItem(mediaItem);
         }
-        
+
         // Start playback
         player.prepare();
         player.setPlayWhenReady(true);
         Toast.makeText(this, "Playing: " + url, Toast.LENGTH_SHORT).show();
     }
-    
+
     @Override
     protected void onStop() {
         super.onStop();
