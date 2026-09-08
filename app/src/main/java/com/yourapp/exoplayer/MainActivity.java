@@ -57,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String url = urlInput.getText().toString().trim();
                 if (!url.isEmpty()) {
-                    // IMPORTANT: User must provide their own license URL
-                    String licenseUrl = "https://license.yourservice.com/license"; // CHANGE THIS
+                    // User must provide their own license URL
+                    String licenseUrl = "https://license.yourservice.com/license";
                     playVideo(url, licenseUrl);
                 } else {
                     Toast.makeText(MainActivity.this, "Enter MPD URL first", Toast.LENGTH_SHORT).show();
