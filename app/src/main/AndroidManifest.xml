@@ -10,7 +10,7 @@
         android:allowBackup="true"
         android:icon="@android:drawable/ic_menu_camera"
         android:label="My ExoPlayer"
-        android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
+        android:theme="@style/Theme.MyExoPlayer"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
